@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line">
+    <stroke
+        android:color="#00AA33"
+        android:width="3dp"
+        android:dashGap="10dp"
+        android:dashWidth="20dp">
+    </stroke>
+    //虚线的颜色，描边的宽度，虚线的间隔，虚线的宽度
+    <size
+        android:height="6dp"></size>
+</shape>
