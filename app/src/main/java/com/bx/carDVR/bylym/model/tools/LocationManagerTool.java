@@ -18,7 +18,9 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.bx.carDVR.DVRService;
 import com.bx.carDVR.DvrApplication;
+import com.bx.carDVR.bylym.model.NotifyMessageManager;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -43,9 +45,10 @@ public class LocationManagerTool {
     private AMapLocationClientOption mLocationOption = null;
 
     DVRService.SpeedCallback mCallback;
+    private DecimalFormat decimalFormat;
 
-    public LocationManagerTool(DVRService.SpeedCallback callback){
-        this.mCallback=callback;
+    public LocationManagerTool(DVRService.SpeedCallback callback) {
+        this.mCallback = callback;
     }
 
     @SuppressLint("MissingPermission")
@@ -69,6 +72,7 @@ public class LocationManagerTool {
 
     public void startGaoDe() {
         if (mLocationManager == null) {
+            decimalFormat = new DecimalFormat("######0.0000");
             //初始化定位
             mLocationClient = new AMapLocationClient(DvrApplication.getInstance());
             //初始化AMapLocationClientOption对象
@@ -91,11 +95,17 @@ public class LocationManagerTool {
         public void onLocationChanged(AMapLocation aMapLocation) {
             mGaoDeMapLocation = aMapLocation;
             int speed = (int) (aMapLocation.getSpeed() * 3.6);
-            if(mCallback != null){
+            if (speed != 0) {
+                speed += 3;
+            }
+            if (mCallback != null) {
                 mCallback.onSpeedChange(speed);
             }
+            String info = "E:" + decimalFormat.format(aMapLocation.getLongitude()) + "  N:" + decimalFormat.format(aMapLocation.getLatitude());
+            String showSpeed = speed + "km/h";
+            NotifyMessageManager.getInstance().updateGPSInfo(info, showSpeed);
 //            ToastTool.showToast("速度"+speed);
-            Log.d(TAG, "onLocationChanged getCity: " + aMapLocation.getCity() + " speed " + speed);
+            Log.d(TAG, "onLocationChanged" + " speed " + speed);
         }
     };
 
@@ -153,7 +163,7 @@ public class LocationManagerTool {
     @SuppressLint("MissingPermission")
     private GpsStatus.Listener statusListener = new GpsStatus.Listener() {
         public void onGpsStatusChanged(int event) {
-           GpsStatus gpsStatus = mLocationManager.getGpsStatus(null);
+            GpsStatus gpsStatus = mLocationManager.getGpsStatus(null);
             if (event == GpsStatus.GPS_EVENT_SATELLITE_STATUS) {//周期的报告卫星状态
                 //得到所有收到的卫星的信息，包括 卫星的高度角、方位角、信噪比、和伪随机号（及卫星编号）
                 Iterable<GpsSatellite> allSatellites;

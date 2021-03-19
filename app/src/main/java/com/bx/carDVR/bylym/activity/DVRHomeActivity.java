@@ -198,6 +198,10 @@ public class DVRHomeActivity extends AppCompatActivity implements View.OnClickLi
     ArrayList<VideoWriter> videoWriterArrayList;
 
     private int adjustAdas = View.GONE;
+    private TextView tvGpsInfo;
+    private TextView tvCarSpeed;
+    private String gpsInfo;
+    private String carSpeed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -265,6 +269,8 @@ public class DVRHomeActivity extends AppCompatActivity implements View.OnClickLi
         curSubPage = SUB_PAGE_VIDEO;
         adasDrawView = findViewById(R.id.adasDrawView);
         adasDrawView.setVisibility(View.VISIBLE);
+        tvGpsInfo = findViewById(R.id.tv_gps_info);
+        tvCarSpeed = findViewById(R.id.tv_car_speed);
 //        setGesture();
         tvMapInfo = findViewById(R.id.position_text_view);
 //        mFrameLayout = findViewById(R.id.fl_camera);
@@ -768,7 +774,7 @@ public class DVRHomeActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
 
-            mRecordingDispView.setVisibility(View.INVISIBLE);
+            mRecordingDispView.setVisibility(View.GONE);
 //            mRecordingBtn.setImageResource(R.drawable.recording_selector);
         }
 
@@ -808,7 +814,7 @@ public class DVRHomeActivity extends AppCompatActivity implements View.OnClickLi
         stopRecordingTimer();
 
         if (curSubPage == SUB_PAGE_PICTURE || curSubPage == SUB_PAGE_VIDEO) {
-            mRecordingDispView.setVisibility(View.INVISIBLE);
+            mRecordingDispView.setVisibility(View.GONE);
             imgBtnRecord.setSelected(false);
         }
     }
@@ -1004,7 +1010,7 @@ public class DVRHomeActivity extends AppCompatActivity implements View.OnClickLi
             }
             imgBtnRecord.setSelected(false);
             isRecording = false;
-            mRecordingDispView.setVisibility(View.INVISIBLE);
+            mRecordingDispView.setVisibility(View.GONE);
 //            mRecordingBtn.setImageResource(R.drawable.recording_selector);
             stopRecordingTimer();
         }
@@ -1375,6 +1381,18 @@ public class DVRHomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     @Override
+    public void updateGPSInfo(String info, String speed) {
+        gpsInfo = info;
+        carSpeed = speed;
+        mHandler.sendEmptyMessage(3);
+    }
+
+    private void updateGPSInfo() {
+        tvGpsInfo.setText(gpsInfo);
+        tvCarSpeed.setText(carSpeed);
+    }
+
+    @Override
     public void updateDVRUI(int type, LdwDetectInfo ldwDetectInfo, CdwDetectInfo cdwDetectInf) {
         if (type == 3) {
             adasDrawView.drawBitmap(ldwDetectInfo, cdwDetectInf);
@@ -1448,12 +1466,17 @@ public class DVRHomeActivity extends AppCompatActivity implements View.OnClickLi
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what == 1) {
+            int number = msg.what;
+            if (number == 1) {
                 mDvrHomeActivity.closeSOS();
             }
-            if (msg.what == 2) {
+            if (number == 2) {
                 mDvrHomeActivity.openSOS();
             }
+            if (number == 3) {
+                mDvrHomeActivity.updateGPSInfo();
+            }
+            removeMessages(number);
         }
     }
 

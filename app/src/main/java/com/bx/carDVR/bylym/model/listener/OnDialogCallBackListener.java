@@ -13,6 +13,8 @@ public interface OnDialogCallBackListener {
 
     void updateDVRUI(int type);
 
+    void updateGPSInfo(String info, String speed);
+
     interface OnShowFormatDialogListener {
         void showFormatDialog();
     }

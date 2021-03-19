@@ -55,6 +55,12 @@ public class NotifyMessageManager {
         }
     }
 
+    public void updateGPSInfo(String info, String speed) {
+        if (mDialogCallBackListener != null) {
+            mDialogCallBackListener.updateGPSInfo(info, speed);
+        }
+    }
+
     public void showFormatDialog() {
         if (mShowFormatDialogListener != null) {
             mShowFormatDialogListener.showFormatDialog();

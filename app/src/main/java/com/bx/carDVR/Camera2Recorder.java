@@ -480,23 +480,6 @@ public class Camera2Recorder implements Recorder ,BackControl{
                     long begin = System.currentTimeMillis();
                     System.arraycopy(ImageUtil.getBytesFromImageAsType2(image, ImageUtil.NV21), 0, mReadBuffer, 0, n_image_size);
 //                    YuvImage image1 = new YuvImage(mReadBuffer,ImageFormat.NV21,image.getWidth(),image.getHeight(),null);
-                    /*System.out.println(" onImageAvailable times:" + (System.currentTimeMillis() - begin));
-                    if(count<5){
-                        count++;
-                        YuvImage image1 = new YuvImage(mReadBuffer,ImageFormat.NV21,image.getWidth(),image.getHeight(),null);
-                        Rect bount=new Rect(0,0,image.getWidth(),image.getHeight());
-                        File file = mFileList.newPictureFile();
-                        FileOutputStream outputStream = null;
-                        Log.d("jpg","filepath="+file.getAbsolutePath());
-                        if (file != null) {
-                            try {
-                                outputStream = new FileOutputStream(file);
-                            }catch (Exception e){
-
-                            }}
-                        image1.compressToJpeg(bount,100,outputStream);
-                    }
-                    image.close();*/
                     //by zrs
                     //  mFrameChain.put(0, 0, mReadBuffer);
                     //  adasServer.processDataAsyn(mCameraFrame);

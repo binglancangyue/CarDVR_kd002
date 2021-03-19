@@ -23,6 +23,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Binder;
@@ -170,6 +171,7 @@ public class DVRService extends Service {
             @Override
             public void run() {
                 Looper.prepare();
+                isGpsOpen();
                 initADAS();
             }
         }).start();
@@ -261,7 +263,7 @@ public class DVRService extends Service {
         adasServer.initConf(1280, 720);
         adasServer.setAdasServerRunMode(MODULE_VALUE);//设置室内模式 室内模式一定写成0，室外模式一定写成1
 
-        Log.d(LOG_TAG, "initADAS: "+AdasConf.VP_X+" "+AdasConf.VP_Y);
+        Log.d(LOG_TAG, "initADAS: " + AdasConf.VP_X + " " + AdasConf.VP_Y);
         if (AdasConf.VP_X < 0 || AdasConf.VP_Y < 0) {
             adasServer.setVPPara(640, 360);
         }
@@ -277,6 +279,7 @@ public class DVRService extends Service {
             @Override
             public void onTickArrive(double v, double v1, double v2) {
 //                Log.d(LOG_TAG, "onTickArrive: " + v2);
+                v2 += 3.0;
 //                Toast.makeText(DvrApplication.getInstance(), "速度" + v2, Toast.LENGTH_SHORT).show();
                 adasServer.updateCarSpeed(v2);
             }
@@ -1784,6 +1787,9 @@ public class DVRService extends Service {
             if (state == 0) {
                 isOpen = true;
                 Settings.Global.putInt(getContentResolver(), Configuration.CAMERA_ADAS_STATUS, 1);
+                Settings.Secure.putInt(DvrApplication.getInstance().getContentResolver(),
+                        Settings.Secure.LOCATION_MODE,
+                        android.provider.Settings.Secure.LOCATION_MODE_HIGH_ACCURACY);
             } else {
                 Settings.Global.putInt(getContentResolver(), Configuration.CAMERA_ADAS_STATUS, 0);
             }
@@ -2073,16 +2079,18 @@ public class DVRService extends Service {
             mainHandle.post(new Runnable() {
                 @Override
                 public void run() {
-                    stopRecordDialog.show();
+//                    stopRecordDialog.show();
+
+                    if (mDialogTool != null) {
+                        mDialogTool.showDialog(stopRecordDialog);
+//                        if (Configuration.IS_3IN) {
+//                            mDialogTool.setDialogTextSize(stopRecordDialog);
+//                        }
+                    }
                     WindowManager.LayoutParams params =
                             stopRecordDialog.getWindow().getAttributes();
                     params.width = 400;
                     stopRecordDialog.getWindow().setAttributes(params);
-//                    if (mDialogTool != null) {
-//                        if (Configuration.IS_3IN) {
-//                            mDialogTool.setDialogTextSize(stopRecordDialog);
-//                        }
-//                    }
                 }
             });
         }
@@ -2209,6 +2217,17 @@ public class DVRService extends Service {
         Intent intent = new Intent(Configuration.ACTION_SHOW_SETTING_WINDOW);
         intent.putExtra("isHideNavigationBar", true);
         sendBroadcast(intent);
+    }
+
+    public void isGpsOpen() {
+        int state = Settings.Secure.getInt(DvrApplication.getInstance().getContentResolver(),
+                Settings.Secure.LOCATION_MODE, Settings.Secure.LOCATION_MODE_OFF);
+        if (state != Settings.Secure.LOCATION_MODE_OFF) {
+            Log.d(LOG_TAG, "isGpsOpen: ");
+            Settings.Secure.putInt(DvrApplication.getInstance().getContentResolver(),
+                    Settings.Secure.LOCATION_MODE,
+                    android.provider.Settings.Secure.LOCATION_MODE_HIGH_ACCURACY);
+        }
     }
 
 }

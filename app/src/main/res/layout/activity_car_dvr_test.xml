@@ -91,7 +91,7 @@
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/recording_disp"
+        android:id="@+id/ll_gps_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|end"
@@ -99,23 +99,67 @@
         android:background="@mipmap/recording_time_bg"
         android:gravity="center"
         android:orientation="horizontal"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="6dp"
-            android:src="@mipmap/recording_state_icon" />
+        android:paddingHorizontal="10dp">
 
         <TextView
-            android:id="@+id/recording_time"
+            android:text="E:0.0000  N:0.0000"
+            android:id="@+id/tv_gps_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/recordingTimeTextSize" />
+            android:textSize="20sp" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_margin="@dimen/recordingTimeMargin"
+        android:paddingHorizontal="10dp"
+        android:background="@mipmap/recording_time_bg">
+
+        <LinearLayout
+            android:id="@+id/recording_disp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="top|start"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="6dp"
+                android:src="@mipmap/recording_state_icon" />
+
+            <TextView
+                android:id="@+id/recording_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/recordingTimeTextSize" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:id="@+id/tv_car_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/recording_disp"
+            android:gravity="center"
+            android:text="0km/h"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
 
     <!--<LinearLayout
         android:layout_width="match_parent"
