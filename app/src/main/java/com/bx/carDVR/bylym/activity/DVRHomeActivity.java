@@ -902,7 +902,7 @@ public class DVRHomeActivity extends AppCompatActivity implements View.OnClickLi
                     } else if (result == Recorder.TAKE_PIC_RST_FAIL) {
                         strId = R.string.take_pic_fail;
                     }
-                    Log.d(TAG, "onFinish: strId： " + result);
+                    Log.d(TAG, "onFinish: strId： " + result + " photoPath " + photoPath);
                     if (strId != -1) {
                         ToastTool.showToast(strId);
 

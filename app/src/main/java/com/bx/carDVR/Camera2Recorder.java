@@ -470,7 +470,7 @@ public class Camera2Recorder implements Recorder ,BackControl{
         mImageReader.setOnImageAvailableListener(new ImageReader.OnImageAvailableListener() {
             @Override
             public void onImageAvailable(ImageReader reader) {
-                Log.d(TAG, "Image available, camera id " + mCameraID);
+//                Log.d(TAG, "Image available, camera id " + mCameraID);
                 Image image = reader.acquireNextImage();
                 if (isShowADAS) {
 //                    int bufferSize = mRecorderParameters.videoWidth * mRecorderParameters.videoHeight * ImageFormat.getBitsPerPixel(ImageFormat.YUV_420_888) / 8;

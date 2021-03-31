@@ -243,7 +243,7 @@ public class DVRFileList {
         }
 
         String fileName = DVRFileInfo.PIC_FILE_NAME_HEADER + dateFormat.format(System.currentTimeMillis())
-                + backOrFront + ".yuv";
+                + backOrFront + DVRFileInfo.PIC_FILE_EXT;
         File file = new File(dirFile, fileName);
 
         /*

@@ -8,6 +8,12 @@ android {
             keyPassword '12345678'
             keyAlias 'key0'
         }
+        release_key {
+            storeFile file('E:\\AndroidStudioWork\\DVR\\CarDVR_kd002\\CarDVR\\release.keystore')
+            storePassword '12345678'
+            keyPassword '12345678'
+            keyAlias 'BxCarDVR'
+        }
     }
     compileSdkVersion 28
     defaultConfig {
@@ -15,7 +21,7 @@ android {
         minSdkVersion 23
         targetSdkVersion 27
         versionCode 1
-        versionName '1.0.210319.1'
+        versionName '1.0.210331.1'
         multiDexEnabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -41,7 +47,7 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
-    ndkVersion '22.0.7026061'
+    ndkVersion '22.1.7171670'
 }
 
 dependencies {
