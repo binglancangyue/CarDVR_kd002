@@ -10,6 +10,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.SystemProperties;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
@@ -103,6 +104,8 @@ public class LocationManagerTool {
             }
             String info = "E:" + decimalFormat.format(aMapLocation.getLongitude()) + "  N:" + decimalFormat.format(aMapLocation.getLatitude());
             String showSpeed = speed + "km/h";
+            SystemProperties.set("persist.sys.globalspeed", showSpeed);
+            SystemProperties.set("persist.sys.globalgps", info);
             NotifyMessageManager.getInstance().updateGPSInfo(info, showSpeed);
 //            ToastTool.showToast("速度"+speed);
             Log.d(TAG, "onLocationChanged" + " speed " + speed);
