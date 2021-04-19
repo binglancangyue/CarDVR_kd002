@@ -62,8 +62,8 @@ public class DVRTools {
     private List<String> mergeVideoList = new ArrayList<>();
     private String mergeVideoPath;
     private static final int CUT_BEFORE_DURATION = 15;
-    public static final int CUT_AFTER_DURATION = 15;
-    private static final int CUT_TOTAL_DURATION = 30;
+    public static final int CUT_AFTER_DURATION = 5;
+    private static final int CUT_TOTAL_DURATION = 20;
     private static int RECORD_TIME = 60;
     private CompositeDisposable compositeDisposable;
     private String cameraFacing;

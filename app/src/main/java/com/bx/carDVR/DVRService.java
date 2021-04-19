@@ -154,7 +154,7 @@ public class DVRService extends Service {
     public static final String CHANNEL_ID_STRING = "service_dvr";
     private SensorEvent mSensorEvent;
     private int counter = 0;
-    public static final int COUNT_DOWN = 16;
+    public static final int COUNT_DOWN = 6;
     private boolean isRecording = false;
     private boolean isMicOpen = true;
     private FunctionTool mFunctionTool;
@@ -1840,7 +1840,7 @@ public class DVRService extends Service {
                 } else {
                     threshold = SENSOR_LEVEL_HIGH;
                 }*/
-                threshold = SENSOR_LEVEL_LOW;
+                threshold = SENSOR_LEVEL_MIDDLE;
                 if ((xlateral > threshold) || (ylongitudinal > threshold) || (zvertical > threshold)) {
                     long time = System.currentTimeMillis();
                     if (time - mFilpTime < 30 * 1000) {
